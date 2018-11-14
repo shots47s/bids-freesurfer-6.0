@@ -472,7 +472,7 @@
         "title": "tool name.invocationSchema", 
         "type": "object"
     }, 
-    "name": "BIDS App - FreeSurfer 6.0", 
+    "name": "BIDSAppFreesurferReconAll60", 
     "schema-version": "0.5", 
     "suggested-resources": {
         "cpu-cores": 1, 
