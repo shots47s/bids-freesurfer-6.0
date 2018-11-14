@@ -297,7 +297,14 @@
             "type": "File", 
             "value-key": "[OUTPUT_DIR]"
         }
-    ], 
+    ],
+    "output-files" : [{
+        "id" : "output_dirrectory",
+        "name" : "Output directory",
+        "description": "The directory where the output files should be stored. If you are running a group level analysis, this folder should be prepopulated with the results of the participant level analysis.",
+        "path-template" : "OUTPUT_DIR",
+        "optional" : false
+    }],
     "invocation-schema": {
         "$schema": "http://json-schema.org/draft-04/schema#", 
         "additionalProperties": false, 
