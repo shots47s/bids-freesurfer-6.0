@@ -456,7 +456,7 @@
     "suggested-resources": {
         "cpu-cores": 4, 
         "ram": 4, 
-        "walltime-estimate": 86400
+        "walltime-estimate": 172000
     }, 
     "tags": {}, 
     "tool-version": "v6.0.0"
