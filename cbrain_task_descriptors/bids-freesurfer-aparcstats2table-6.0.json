@@ -1,0 +1,36 @@
+{
+    "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>", 
+    "command-line": "/run_aparcstats2table.py --output_directories [out_dirs] --subjects_file /tmp/ab_subject_file.txt; /opt/freesurfer/bin/aparcstats2tables --subjectsfile /tmp/ab_subject_file.txt",
+    "container-image": {
+        "image": "shots47s/bids-freesurfer-6.0", 
+        "type": "singularity"
+    }, 
+    "description": "BIDS App version of freesurfer 6.0, from https://github.com/BIDS-Apps/freesurfer, see the readme there for more details, note it needs a license file to run", 
+    "inputs": [
+        {
+            "description": "Directories output from reconall", 
+            "id": "output_dirs", 
+            "name": "output_dirs", 
+            "optional": false, 
+            "type": "String", 
+            "list": true,
+            "value-key": "[out_dirs]"
+        } 
+    ],
+    "output-files" : [{
+        "id" : "table_file",
+        "name" : "Table File",
+        "description": "Stats Table File",
+        "path-template" : "aparc_lh_thickness_table.txt",
+        "optional" : false
+    }],
+    "name": "BIDSAppFreesurferAparcstats2table", 
+    "schema-version": "0.5", 
+    "suggested-resources": {
+        "cpu-cores": 1, 
+        "ram": 1, 
+        "walltime-estimate": 3600
+    }, 
+    "tags": {}, 
+    "tool-version": "v6.0.0"
+}
