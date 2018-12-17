@@ -1,6 +1,6 @@
 {
     "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>", 
-    "command-line": "mkdir -p [OUTPUT_DIR] ; /run.py [BIDS_DIR] [OUTPUT_DIR] [ANALYSIS_LEVEL] [PARTICIPANT_LABEL] [SESSION_LABEL] [N_CPUS] [STAGES] [STEPS] [TEMPLATE_NAME] [LICENSE_FILE] [ACQUISITION_LABEL] [REFINE_PIAL_ACQUISITION_LABEL] [MULTIPLE_SESSIONS] [REFINE_PIAL] [HIRES_MODE] [PARCELLATIONS] [MEASUREMENTS] [VERSION] [BIDS_VALIDATOR_CONFIG] [SKIP_BIDS_VALIDATOR] [3T]", 
+    "command-line": "mkdir -p [OUTPUT_DIR] [OUTPUT_P_DIR]; /run.py [BIDS_DIR] [OUTPUT_DIR] [OUTPUT_P_DIR] [ANALYSIS_LEVEL] [PARTICIPANT_LABEL] [SESSION_LABEL] [N_CPUS] [STAGES] [STEPS] [TEMPLATE_NAME] --license_file ./[LICENSE_FILE] [ACQUISITION_LABEL] [REFINE_PIAL_ACQUISITION_LABEL] [MULTIPLE_SESSIONS] [REFINE_PIAL] [HIRES_MODE] [PARCELLATIONS] [MEASUREMENTS] [BIDS_VALIDATOR_CONFIG] [SKIP_BIDS_VALIDATOR] [3T]", 
     "container-image": {
         "image": "shots47s/bids-freesurfer-6.0", 
         "type": "singularity"
@@ -12,7 +12,7 @@
             "description": "For a participants analysis, an output directory name must be specified. For a group analysis, a directory containing the output of participant-level analyses must be selected. ", 
             "id": "output_directory", 
             "members": [
-                "output_dir", 
+                "output_dir_name", 
                 "participant_level_analysis_dir"
             ], 
             "mutually-exclusive": true, 
@@ -26,13 +26,13 @@
             "id": "bids_dir", 
             "name": "bids_dir", 
             "optional": false, 
-            "type": "String", 
+            "type": "File", 
             "value-key": "[BIDS_DIR]"
         }, 
         {
             "description": "The directory where the output files should be stored. If you are running group level analysis this folder should be prepopulated with the results of theparticipant level analysis.", 
-            "id": "output_dir", 
-            "name": "output_dir", 
+            "id": "output_dir_name", 
+            "name": "output_dir_name", 
             "optional": true, 
             "type": "String", 
             "value-key": "[OUTPUT_DIR]"
@@ -82,9 +82,6 @@
         }, 
         {
             "command-line-flag": "--stages", 
-            "default-value": [
-                "autorecon-all"
-            ], 
             "description": "Autorecon stages to run.", 
             "id": "stages", 
             "list": true, 
@@ -105,11 +102,6 @@
         }, 
         {
             "command-line-flag": "--steps", 
-            "default-value": [
-                "cross-sectional", 
-                "template", 
-                "longitudinal"
-            ], 
             "description": "Longitudinal pipeline steps to run.", 
             "id": "steps", 
             "list": true, 
@@ -134,12 +126,11 @@
             "value-key": "[TEMPLATE_NAME]"
         }, 
         {
-            "command-line-flag": "--license_file", 
             "description": "Path to FreeSurfer license key file. To obtain it you need to register (for free) at https://surfer.nmr.mgh.harvard.edu/registration.html", 
             "id": "license_file", 
             "name": "license_file", 
             "optional": false, 
-            "type": "String", 
+            "type": "File", 
             "value-key": "[LICENSE_FILE]"
         }, 
         {
@@ -176,9 +167,6 @@
         }, 
         {
             "command-line-flag": "--refine_pial", 
-            "default-value": [
-                "T2"
-            ], 
             "description": "If the dataset contains 3D T2 or T2 FLAIR weighted images (~1x1x1), these can be used to refine the pial surface. If you want to ignore these, specify None or  T1only to base surfaces on the T1 alone.", 
             "id": "refine_pial", 
             "name": "refine_pial", 
@@ -209,9 +197,6 @@
         }, 
         {
             "command-line-flag": "--parcellations", 
-            "default-value": [
-                "aparc"
-            ], 
             "description": "Group2 option: cortical parcellation(s) to extract stats from.", 
             "id": "parcellations", 
             "list": true, 
@@ -226,9 +211,6 @@
         }, 
         {
             "command-line-flag": "--measurements", 
-            "default-value": [
-                "thickness"
-            ], 
             "description": "Group2 option: cortical measurements to extract stats for.", 
             "id": "measurements", 
             "list": true, 
@@ -246,16 +228,6 @@
                 "curvind"
             ], 
             "value-key": "[MEASUREMENTS]"
-        }, 
-        {
-            "command-line-flag": "-v", 
-            "default-value": "==SUPPRESS==", 
-            "description": "show program's version number and exit", 
-            "id": "version", 
-            "name": "version", 
-            "optional": true, 
-            "type": "String", 
-            "value-key": "[VERSION]"
         }, 
         {
             "command-line-flag": "--bids_validator_config", 
@@ -295,14 +267,14 @@
             "name": "Participants dir", 
             "optional": true, 
             "type": "File", 
-            "value-key": "[OUTPUT_DIR]"
+            "value-key": "[OUTPUT_P_DIR]"
         }
     ],
     "output-files" : [{
         "id" : "output_dirrectory",
         "name" : "Output directory",
         "description": "The directory where the output files should be stored. If you are running a group level analysis, this folder should be prepopulated with the results of the participant level analysis.",
-        "path-template" : "OUTPUT_DIR",
+        "path-template" : "[OUTPUT_DIR]",
         "optional" : false
     }],
     "invocation-schema": {
@@ -482,9 +454,9 @@
     "name": "BIDSAppFreesurferReconAll", 
     "schema-version": "0.5", 
     "suggested-resources": {
-        "cpu-cores": 1, 
-        "ram": 1, 
-        "walltime-estimate": 60
+        "cpu-cores": 4, 
+        "ram": 4, 
+        "walltime-estimate": 172000
     }, 
     "tags": {}, 
     "tool-version": "v6.0.0"
