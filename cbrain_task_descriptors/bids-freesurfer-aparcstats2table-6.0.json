@@ -1,6 +1,6 @@
 {
     "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>", 
-    "command-line": "/run_aparcstats2table.py --cbcsv_file [cbcsv_file] --subjects_file /tmp/ab_subject_file.txt; export SUBJECTS_DIR=./; /opt/freesurfer/bin/aparcstats2table --subjectsfile /tmp/ab_subject_file.txt -t [table_file] --hemi lh --meas thickness --parc aparc",
+    "command-line": "/run_aparcstats2table.py --filecol [filecol] --subjects_file /tmp/ab_subject_file.txt; export SUBJECTS_DIR=./; /opt/freesurfer/bin/aparcstats2table --subjectsfile /tmp/ab_subject_file.txt -t [table_file] --hemi lh --meas thickness --parc aparc",
     "container-image": {
         "image": "shots47s/bids-freesurfer-6.0", 
         "type": "singularity"
@@ -9,11 +9,11 @@
     "inputs": [
         {
             "description": "Directories output from reconall", 
-            "id": "cbcsv_file", 
-            "name": "CBBRAIN CSV File", 
+            "id": "filecol", 
+            "name": "ReconAll Output FileCollection", 
             "optional": false, 
             "type": "File", 
-            "value-key": "[cbcsv_file]"
+            "value-key": "[filecol]"
         },
         {
             "description":"Tables output file name",
