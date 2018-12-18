@@ -1,6 +1,6 @@
 {
     "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>", 
-    "command-line": "/run_aparcstats2table.py --output_directories [out_dirs] --subjects_file /tmp/ab_subject_file.txt; /opt/freesurfer/bin/aparcstats2tables --subjectsfile /tmp/ab_subject_file.txt",
+    "command-line": "/run_aparcstats2table.py --cbcsv_file [cbcsv_file] --subjects_file /tmp/ab_subject_file.txt; export SUBJECTS_DIR=./; /opt/freesurfer/bin/aparcstats2table --subjectsfile /tmp/ab_subject_file.txt -t [table_file] --hemi lh --meas thickness --parc aparc",
     "container-image": {
         "image": "shots47s/bids-freesurfer-6.0", 
         "type": "singularity"
@@ -9,20 +9,27 @@
     "inputs": [
         {
             "description": "Directories output from reconall", 
-            "id": "output_dirs", 
-            "name": "output_dirs", 
+            "id": "cbcsv_file", 
+            "name": "CBBRAIN CSV File", 
             "optional": false, 
-            "type": "String", 
-            "list": true,
-            "value-key": "[out_dirs]"
+            "type": "File", 
+            "value-key": "[cbcsv_file]"
+        },
+        {
+            "description":"Tables output file name",
+            "id": "table_file",
+            "name": "Table File",
+            "type": "String",
+            "optional": true,
+            "default-value" : "aparc_lh_thickness_table.txt",
+            "value-key":"[table_file]"
         } 
     ],
     "output-files" : [{
-        "id" : "table_file",
+        "id" : "table_out_file",
         "name" : "Table File",
         "description": "Stats Table File",
-        "path-template" : "aparc_lh_thickness_table.txt",
-        "optional" : false
+        "path-template" : "[table_file]" 
     }],
     "name": "BIDSAppFreesurferAparcstats2table", 
     "schema-version": "0.5", 
@@ -31,6 +38,12 @@
         "ram": 1, 
         "walltime-estimate": 3600
     }, 
+    "environment-variables": [
+        {
+            "name":"SUBJECTS_DIR",
+            "value":"./"
+        }
+    ],
     "tags": {}, 
     "tool-version": "v6.0.0"
 }
