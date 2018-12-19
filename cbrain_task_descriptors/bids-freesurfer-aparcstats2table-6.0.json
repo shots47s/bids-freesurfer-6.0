@@ -1,6 +1,6 @@
 {
     "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>", 
-    "command-line": "/run_aparcstats2table.py --filecol [filecol] --subjects_file ./ab_subject_file.txt; export SUBJECTS_DIR=./; /opt/freesurfer/bin/aparcstats2table --subjectsfile ./ab_subject_file.txt -t [table_file] --skip --hemi lh --meas thickness --parc aparc",
+    "command-line": "/run_aparcstats2table.py --filecol [filecol] --subjects_file ./ab_subject_file.txt; export SUBJECTS_DIR=./; /opt/freesurfer/bin/aparcstats2table --subjectsfile ./ab_subject_file.txt -t [table_file] --skip --hemi [hemi] --meas thickness --parc aparc",
     "container-image": {
         "image": "shots47s/bids-freesurfer-6.0", 
         "type": "singularity"
@@ -23,7 +23,20 @@
             "optional": true,
             "default-value" : "aparc_lh_thickness_table.txt",
             "value-key":"[table_file]"
-        } 
+        },
+        {
+	    "description":"Left or Right Hemisphere",
+            "id": "hemi",
+            "name": "Which Hemisphere",
+            "type": "String",
+            "optional": false,
+            "default-value" : "lh",
+            "value-choices": [
+                "lh",
+                "rh"
+            ],
+            "value-key":"[hemi]" 
+         }
     ],
     "output-files" : [{
         "id" : "table_out_file",
