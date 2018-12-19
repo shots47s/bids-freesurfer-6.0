@@ -23,7 +23,7 @@
             "optional": true,
             "default-value" : "aparc_lh_thickness_table.txt",
             "value-key":"[table_file]"
-        },
+        }
     ],
     "output-files" : [{
         "id" : "table_out_file",
