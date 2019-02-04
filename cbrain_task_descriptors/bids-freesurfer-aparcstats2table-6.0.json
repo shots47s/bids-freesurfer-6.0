@@ -44,6 +44,9 @@
             "value":"./"
         }
     ],
+     "custom": {
+        "cbrain:readonly-input-files": true
+     },
     "tags": {}, 
     "tool-version": "v6.0.0"
 }
