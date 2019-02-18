@@ -1,6 +1,6 @@
 {
     "author": "Shawn T. Brown, McGill University <stbrown@mcin.ca>",
-    "command-line": "mkdir -p [OUTPUT_DIR] [OUTPUT_P_DIR]; /run.py [BIDS_DIR] [OUTPUT_DIR] [OUTPUT_P_DIR] [ANALYSIS_LEVEL] [PARTICIPANT_LABEL] [SESSION_LABEL] [N_CPUS] [STAGES] [STEPS] [TEMPLATE_NAME] --license_file ./[LICENSE_FILE] [ACQUISITION_LABEL] [REFINE_PIAL_ACQUISITION_LABEL] [MULTIPLE_SESSIONS] [REFINE_PIAL] [HIRES_MODE] [PARCELLATIONS] [MEASUREMENTS] [BIDS_VALIDATOR_CONFIG] [SKIP_BIDS_VALIDATOR] [3T]",
+    "command-line": "mkdir -p [OUTPUT_DIR] [OUTPUT_P_DIR]; /run.py [BIDS_DIR] [OUTPUT_DIR] [OUTPUT_P_DIR] [ANALYSIS_LEVEL] [PARTICIPANT_LABEL] [SESSION_LABEL] [N_CPUS] [STAGES] [STEPS] [TEMPLATE_NAME] --license_file /license.txt [QCACHE] [ACQUISITION_LABEL] [REFINE_PIAL_ACQUISITION_LABEL] [MULTIPLE_SESSIONS] [REFINE_PIAL] [HIRES_MODE] [PARCELLATIONS] [MEASUREMENTS] [BIDS_VALIDATOR_CONFIG] [SKIP_BIDS_VALIDATOR] [3T] > out.dat",
     "container-image": {
         "image": "shots47s/bids-freesurfer-6.0",
         "type": "singularity"
@@ -101,6 +101,16 @@
             "value-key": "[STAGES]"
         },
         {
+            "command-line-flag": "--qcache",
+            "description": "Enable QCaching",
+            "id": "qcache",
+            "name": "qcache",
+            "optional": true,
+            "type": "Flag",
+            "default-value": false,
+            "value-key": "[QCACHE]"
+        },
+        {
             "command-line-flag": "--steps",
             "description": "Longitudinal pipeline steps to run.",
             "id": "steps",
@@ -124,14 +134,6 @@
             "optional": true,
             "type": "String",
             "value-key": "[TEMPLATE_NAME]"
-        },
-        {
-            "description": "Path to FreeSurfer license key file. To obtain it you need to register (for free) at https://surfer.nmr.mgh.harvard.edu/registration.html",
-            "id": "license_file",
-            "name": "license_file",
-            "optional": false,
-            "type": "File",
-            "value-key": "[LICENSE_FILE]"
         },
         {
             "command-line-flag": "--acquisition_label",
@@ -277,180 +279,6 @@
         "path-template" : "[OUTPUT_DIR]",
         "optional" : false
     }],
-    "invocation-schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "additionalProperties": false,
-        "allOf": [
-            {
-                "anyOf": [
-                    {
-                        "required": [
-                            "output_dir"
-                        ]
-                    },
-                    {
-                        "required": [
-                            "participant_level_analysis_dir"
-                        ]
-                    }
-                ]
-            }
-        ],
-        "dependencies": {
-            "output_dir": {
-                "properties": {
-                    "participant_level_analysis_dir": {
-                        "not": {}
-                    }
-                }
-            },
-            "participant_level_analysis_dir": {
-                "properties": {
-                    "output_dir": {
-                        "not": {}
-                    }
-                }
-            }
-        },
-        "description": "Invocation schema for tool name.",
-        "properties": {
-            "3T": {
-                "enum": [
-                    "true",
-                    "false"
-                ]
-            },
-            "acquisition_label": {
-                "type": "string"
-            },
-            "analysis_level": {
-                "enum": [
-                    "participant",
-                    "group1",
-                    "group2"
-                ]
-            },
-            "bids_dir": {
-                "type": "string"
-            },
-            "bids_validator_config": {
-                "type": "string"
-            },
-            "hires_mode": {
-                "enum": [
-                    "auto",
-                    "enable",
-                    "disable"
-                ]
-            },
-            "license_file": {
-                "type": "string"
-            },
-            "measurements": {
-                "items": {
-                    "enum": [
-                        "area",
-                        "volume",
-                        "thickness",
-                        "thicknessstd",
-                        "meancurv",
-                        "gauscurv",
-                        "foldind",
-                        "curvind"
-                    ]
-                },
-                "type": "array"
-            },
-            "multiple_sessions": {
-                "enum": [
-                    "longitudinal",
-                    "multiday"
-                ]
-            },
-            "n_cpus": {
-                "type": "number"
-            },
-            "output_dir": {
-                "type": "string"
-            },
-            "parcellations": {
-                "items": {
-                    "enum": [
-                        "aparc",
-                        "aparc.a2009s"
-                    ]
-                },
-                "type": "array"
-            },
-            "participant_label": {
-                "items": {
-                    "type": "string"
-                },
-                "type": "array"
-            },
-            "participant_level_analysis_dir": {
-                "type": "string"
-            },
-            "refine_pial": {
-                "enum": [
-                    "T2",
-                    "FLAIR",
-                    "None",
-                    "T1only"
-                ]
-            },
-            "refine_pial_acquisition_label": {
-                "type": "string"
-            },
-            "session_label": {
-                "items": {
-                    "type": "string"
-                },
-                "type": "array"
-            },
-            "skip_bids_validator": {
-                "type": "boolean"
-            },
-            "stages": {
-                "items": {
-                    "enum": [
-                        "autorecon1",
-                        "autorecon2",
-                        "autorecon2-cp",
-                        "autorecon2-wm",
-                        "autorecon-pial",
-                        "autorecon3",
-                        "autorecon-all",
-                        "all"
-                    ]
-                },
-                "type": "array"
-            },
-            "steps": {
-                "items": {
-                    "enum": [
-                        "cross-sectional",
-                        "template",
-                        "longitudinal"
-                    ]
-                },
-                "type": "array"
-            },
-            "template_name": {
-                "type": "string"
-            },
-            "version": {
-                "type": "string"
-            }
-        },
-        "required": [
-            "bids_dir",
-            "analysis_level",
-            "license_file"
-        ],
-        "title": "tool name.invocationSchema",
-        "type": "object"
-    },
     "name": "BIDSAppFreesurferReconAll",
     "schema-version": "0.5",
     "suggested-resources": {
